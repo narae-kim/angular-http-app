@@ -1,0 +1,27 @@
+<h2>Product List</h2>
+<ul>
+    <li *ngFor="let product of products | sort" (click)="selectedProduct = product">
+        {{product.name}}
+    </li>
+</ul>
+<app-product-detail
+    *ngIf="selectedProduct; else noProduct"
+    [id]="selectedProduct.id"
+    (deleted)="onDelete()"
+    (bought)="onBuy()">
+</app-product-detail>
+<app-product-create (added)="onAdd($event)"></app-product-create>
+<ng-template #noProduct>
+    <p>No product is selected :P</p>
+</ng-template>
+<h2>Product List (async)</h2>
+<ul>
+    <li *ngFor="let product of (products$ | async)! | sort" (click)="selectedProduct = product">
+        {{product.name}}
+    </li>
+</ul>
+<app-product-detail
+    *ngIf="selectedProduct; else noProduct"
+    [id]="selectedProduct.id"
+    (bought)="onBuy()">
+</app-product-detail>
